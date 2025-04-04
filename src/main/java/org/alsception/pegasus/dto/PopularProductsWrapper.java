@@ -5,7 +5,8 @@ package org.alsception.pegasus.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
-public class PopularProductsWrapper {
+public class PopularProductsWrapper 
+{
     @JsonProperty("popularProducts")
     private List<PopularProduct> popularProducts;
 

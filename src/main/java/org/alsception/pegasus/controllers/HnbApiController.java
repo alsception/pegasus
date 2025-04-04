@@ -7,10 +7,12 @@ import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/hnbapi")
-public class HnbApiController {
+public class HnbApiController 
+{
     private final HnbApiService hnbApiService;
 
-    public HnbApiController(HnbApiService hnbApiService) {
+    public HnbApiController(HnbApiService hnbApiService) 
+    {
         this.hnbApiService = hnbApiService;
     }
 

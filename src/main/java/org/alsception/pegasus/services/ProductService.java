@@ -1,6 +1,6 @@
 package org.alsception.pegasus.services;
 
-import static java.lang.Math.random;
+import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -54,18 +54,16 @@ public class ProductService
         }
     }
     
-    public PGSProduct saveProduct(PGSProduct product) 
+    public PGSProduct createProduct(PGSProduct product) 
     {       
         //This checks for code and other business logic constraints. Will thorw exception if product not valid  
         ProductValidator.validate(product);
         
-        calculateUsdPrice(product);                
-        
-        //TODO: This is only if we are creating new product
-        //But what if product already exists?
+        calculateUsdPrice(product);          
         
         final List<PGSReview> reviews = product.getReviews();
         
+        //New product with reviews (needs to be saved separately)
         if(product.getId() == null && reviews!=null && !reviews.isEmpty())
         {
             return createProductAndReviews(product);
@@ -74,6 +72,35 @@ public class ProductService
         {
             return productRepository.save(product);
         }        
+    }
+    
+    public PGSProduct updateProduct(Long id, PGSProduct updatedProduct) 
+    {
+        ProductValidator.validate(updatedProduct);
+        
+        calculateUsdPrice(updatedProduct);       
+        
+        return productRepository.findById(id).map(existingProduct -> {
+
+            // Keep existing reviews if updatedProduct does not explicitly contain reviews
+            if (updatedProduct.getReviews() == null) {
+                updatedProduct.setReviews(existingProduct.getReviews());
+            }
+
+            // If updatedProduct has an empty list of reviews, remove all reviews
+            if (updatedProduct.getReviews() != null && updatedProduct.getReviews().isEmpty()) {
+                existingProduct.getReviews().clear();
+            }
+
+            // Update other fields
+            existingProduct.setName(updatedProduct.getName());
+            existingProduct.setCode(updatedProduct.getCode());
+            existingProduct.setDescription(updatedProduct.getDescription());
+            existingProduct.setPriceEur(updatedProduct.getPriceEur());
+            existingProduct.setPriceUsd(updatedProduct.getPriceUsd());
+
+            return productRepository.save(existingProduct);
+        }).orElseThrow(() -> new EntityNotFoundException("Product not found"));
     }
 
     private PGSProduct createProductAndReviews(PGSProduct product) 
@@ -98,6 +125,16 @@ public class ProductService
         // Reload product with reviews from DB
         return productRepository.getReferenceById(savedProduct.getId());
     }
+    
+    public void deleteProduct(Long id) 
+    {
+        productRepository.deleteById(id);
+    }
+
+    public boolean existsById(Long id) 
+    {
+        return productRepository.existsById(id);
+    } 
     
     private void calculateUsdPrice(PGSProduct product) 
     {
@@ -140,7 +177,7 @@ public class ProductService
                     product.setPriceUsd(BigDecimal.ZERO); // USD price calculated later
                     product.setDescription("Description for product " + i);
                     generateRandomReviews(product);
-                    saveProduct(product);
+                    createProduct(product);
                 }catch(Exception e){
                     System.err.println("Error generationg product "+i);
                     System.err.println(e);
@@ -169,7 +206,6 @@ public class ProductService
         
         product.setReviews(reviews);
     }
-    
 
     private String generateValidCode() {
         StringBuilder sb = new StringBuilder("PROD-");
