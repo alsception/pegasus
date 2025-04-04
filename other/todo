@@ -1,0 +1,25 @@
+Pegasus todo
+
+run: mvn spring-boot:run
+
+----------------------------------------------------------
+
+Postavljanje projekta (30 min - 1h)
+    Generisanje Spring Boot aplikacije (Spring Initializr) sa potrebnim zavisnostima (Spring Web, Spring Data JPA, H2 baza).
+    Konfiguracija application.properties.
+
+Definisanje modela (30 min - 1h)
+    Kreiranje Product i Review entiteta.
+    Postavljanje Hibernate veza (@OneToMany, @ManyToOne).
+
+Implementacija repozitorijuma i servisa (1h - 1.5h)
+    ProductRepository i ReviewRepository koristeći JpaRepository.
+    Servisni sloj sa metodama za unos, dohvat i obradu podataka.
+
+Kreiranje REST kontrolera (1h - 1.5h)
+    Endpointi za unos, filtriranje i dohvat popularnih proizvoda.
+    Poziv HNB API-ja za konverziju valuta (RestTemplate ili WebClient).
+
+Testiranje i finalni touch (30 min - 1h)
+    Ubacivanje inicijalnih podataka (CommandLineRunner).
+    Brza provera sa Postmanom ili curl-om.
