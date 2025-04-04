@@ -16,14 +16,13 @@ import org.alsception.pegasus.entities.PGSReview;
 import org.alsception.pegasus.repositories.ProductRepository;
 import org.alsception.pegasus.repositories.ReviewRepository;
 import org.alsception.pegasus.utils.ProductValidator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProductService 
 {
+    private static final int MAX_RATING = 5;
+    
     private final ProductRepository productRepository;
     private final ReviewRepository reviewRepository;
     private final HnbApiService hnbApiService;
@@ -131,22 +130,26 @@ public class ProductService
     {
         if (productRepository.count() == 0) 
         { // Prevent duplicate insertion
-            List<PGSProduct> products = new ArrayList<>();
-
+            int errors = 0;
             for (int i = 1; i <= count; i++) {
-                PGSProduct product = new PGSProduct();
-                product.setCode(generateValidCode());
-                product.setName("Product " + i);
-                product.setPriceEur(BigDecimal.valueOf(random.nextInt(100) + 10)); // Price: 10 - 109 EUR
-                product.setPriceUsd(BigDecimal.ZERO); // USD price calculated later
-                product.setDescription("Description for product " + i);
-
-                generateRandomReviews(product);
-                products.add(product);
-                saveProduct(product);
+                try{
+                    PGSProduct product = new PGSProduct();
+                    product.setCode(generateValidCode());
+                    product.setName("Product " + i);
+                    product.setPriceEur(BigDecimal.valueOf(random.nextInt(100) + 10)); // Price: 10 - 109 EUR
+                    product.setPriceUsd(BigDecimal.ZERO); // USD price calculated later
+                    product.setDescription("Description for product " + i);
+                    generateRandomReviews(product);
+                    saveProduct(product);
+                }catch(Exception e){
+                    System.err.println("Error generationg product "+i);
+                    System.err.println(e);
+                    errors++;
+                }
             }
             
             System.out.println("✅ " + count + " Sample products initialized.");
+            System.out.println("Errors: "+errors);
         }
     }
 
@@ -159,13 +162,14 @@ public class ProductService
             PGSReview review = new PGSReview();
             review.setReviewer("Reviewer " + (i + 1));
             review.setText("This is a review " + (i + 1) + " for " + product.getName());
-            review.setRating(random.nextInt(5) + 1); // Random rating from 1 to 5
+            review.setRating(random.nextInt(MAX_RATING) + 1); // Random rating from 1 to 5
             review.setProduct(product);
             reviews.add(review);
         }
         
         product.setReviews(reviews);
     }
+    
 
     private String generateValidCode() {
         StringBuilder sb = new StringBuilder("PROD-");

@@ -1,6 +1,8 @@
 package org.alsception.pegasus.utils;
 
+import java.util.List;
 import org.alsception.pegasus.entities.PGSProduct;
+import org.alsception.pegasus.entities.PGSReview;
 import org.alsception.pegasus.exception.ProductValidationException;
 
 public class ProductValidator {
@@ -12,6 +14,15 @@ public class ProductValidator {
         }
         
         validateCode(product);
+        final List<PGSReview> reviews = product.getReviews();
+        
+        if(reviews!=null && !reviews.isEmpty())
+        {
+            for(PGSReview r : reviews)
+            {
+                validateRating(r);
+            }
+        }
     }
 
     private static void validateCode(PGSProduct product) throws IllegalArgumentException 
@@ -24,4 +35,21 @@ public class ProductValidator {
     }
     
     //TODO: validate review 1-5
+    public static void validate(PGSReview review) 
+    {
+        if (review == null) {
+            throw new ProductValidationException("Review cannot be null");
+        }
+        
+        validateRating(review);
+    }
+    
+    private static void validateRating(PGSReview review) throws IllegalArgumentException 
+    {
+        int rating = review.getRating();
+        if (rating < 1 || rating>5) 
+        {
+            throw new ProductValidationException("Rating must be from 1-5 (you have " + rating + ")");
+        }
+    }
 }
