@@ -42,20 +42,27 @@ public class ProductService
         return productRepository.findById(id);
     }
     
-    public List<PGSProduct> findProducts(String code, String name) 
+    public List<PGSProduct> findProducts(String search, String code, String name) 
     {
-        if(code==null && name == null)
+        if(search != null)
         { 
-            return productRepository.findAll();
-        }
-        else
-        {
-            return productRepository.findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(code, name);
+            return productRepository.findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(search, search);
+        }else{
+            if(code==null && name == null)
+            { 
+                return productRepository.findAll();
+            }
+            else
+            {
+                return productRepository.findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(code, name);
+            }
         }
     }
     
     public PGSProduct createProduct(PGSProduct product) 
     {       
+        //1) save audit: saving product... 
+        
         //This checks for code and other business logic constraints. Will thorw exception if product not valid  
         ProductValidator.validate(product);
         

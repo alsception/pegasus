@@ -1,0 +1,51 @@
+spring:
+  application:
+    name: pegasus
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/aba
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+    show-sql: true
+
+  h2:
+    console:
+      enabled: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /pegasus-backend
+
+jwt:
+  secret: ${JWT_SECRET}
+  expirationMs: 86400000
+
+debug: false
+
+spring.output.ansi.enabled: ALWAYS
+
+logging:
+  level:
+    org.springframework.web: INFO
+    org.springframework: INFO
+    root: INFO
+    org.alsception: INFO
+
+api:
+  env-url-1: https://api.hnb.h
+
+# cors:
+#   allowed-origins:
+#     - http://localhost:5173
+#     - https://your-frontend.com
+

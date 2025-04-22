@@ -9,12 +9,12 @@ import reactor.core.publisher.Mono;
 @Service
 public class HnbApiService {
 
-    private final WebClient webClient;
-
+    private final WebClient webClient;   
+    
     public HnbApiService() {
         this.webClient = WebClient.create("https://api.hnb.hr");
     }
-
+    
     public Mono<HnbApiExchangeRateResponse> fetchData() {
         return webClient.get()
             .uri("/tecajn-eur/v3?valuta=USD")

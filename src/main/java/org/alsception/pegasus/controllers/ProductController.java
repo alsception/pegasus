@@ -25,9 +25,9 @@ public class ProductController
     private ProductService productService;
     
     @GetMapping
-    public List<PGSProduct> getProducts(@RequestParam(required = false) String code, @RequestParam(required = false) String name)
+    public List<PGSProduct> getProducts(@RequestParam(required = false) String search, @RequestParam(required = false) String code, @RequestParam(required = false) String name)
     {        
-        return productService.findProducts(code, name);
+        return productService.findProducts(search, code, name);
     }    
 
     @GetMapping("/{id}")

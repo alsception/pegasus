@@ -31,3 +31,20 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Ignore local secret configs
+/src/main/resources/application-local.properties
+/src/main/resources/application-dev.properties
+.env
+
+# Already common ignores for Java projects
+/target/
+*.log
+*.class
+*.jar
+*.war
+*.ear
+/.idea/
+*.iml
+.DS_Store
+
