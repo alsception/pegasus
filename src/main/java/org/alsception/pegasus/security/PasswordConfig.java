@@ -1,4 +1,4 @@
-package org.alsception.pegasus.security2;
+package org.alsception.pegasus.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

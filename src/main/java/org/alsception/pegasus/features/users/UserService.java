@@ -2,7 +2,7 @@ package org.alsception.pegasus.features.users;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import org.alsception.pegasus.security2.SecurityConfig;
+import org.alsception.pegasus.security.SecurityConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

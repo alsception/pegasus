@@ -1,4 +1,4 @@
-package org.alsception.pegasus.security2;
+package org.alsception.pegasus.security;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;

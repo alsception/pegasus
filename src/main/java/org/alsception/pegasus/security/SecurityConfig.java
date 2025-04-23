@@ -1,4 +1,4 @@
-package org.alsception.pegasus.security2;
+package org.alsception.pegasus.security;
 
 import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
@@ -73,27 +73,42 @@ public class SecurityConfig {
     public CorsConfigurationSource corsConfigurationSource() 
     {
         logger.info("Creating CorsConfigurationSource");
+        
         CorsConfiguration configuration = new CorsConfiguration();
 
         // Dynamic CORS based on profile
-        if ("production".equals(activeProfile)) {
+        if ("production".equals(activeProfile)) 
+        {
             //TODO: LOAD THIS FROM APP.PROPERTIES
             logger.info("Whitelisting production: https://your-frontend.com");
+            
             configuration.setAllowedOrigins(Collections.singletonList("https://your-frontend.com"));
-        } else {
+        } 
+        else 
+        {
             logger.info("Whitelisting dev server: http://localhost:5173");
-            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
+            
+            configuration.setAllowedOrigins(
+                    Arrays.asList(
+                            "http://localhost:5173",    //Local dev
+                            "http://192.168.1.70:8080"  //Local dev network
+                    )
+            );
         }
         logger.trace("Setting up CORS details:");
+        
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         logger.trace("Allowed methods set: GET, POST, PUT, DELETE, OPTIONS");
+        
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
         logger.trace("Allowed headers set: " + "Authorization " + "Cache-Control " + "Content-Type ");
+        
         configuration.setAllowCredentials(true);
         logger.trace("Allowed credentials set");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        
         return source;
     }
 

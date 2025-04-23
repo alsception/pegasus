@@ -1,4 +1,4 @@
-package org.alsception.pegasus.security2;
+package org.alsception.pegasus.security;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;

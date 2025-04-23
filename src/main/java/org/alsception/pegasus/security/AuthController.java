@@ -1,11 +1,11 @@
-package org.alsception.pegasus.security2;
+package org.alsception.pegasus.security;
 
 import java.util.HashMap;
 import java.util.Map;
 import org.alsception.pegasus.features.users.ABAUser;
 import org.alsception.pegasus.features.users.ABAUserRole;
 import org.alsception.pegasus.features.users.UserService;
-import org.alsception.pegasus.security2.JwtUtils;
+import org.alsception.pegasus.security.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
