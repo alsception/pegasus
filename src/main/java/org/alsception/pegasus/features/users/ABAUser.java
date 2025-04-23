@@ -15,6 +15,7 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -57,4 +58,17 @@ public class ABAUser
     protected void onCreate() {
         this.created = LocalDateTime.now();
     }
+
+    public ABAUser(org.alsception.pegasus.security2.UserDTO userDTO) 
+    {
+        this.username = userDTO.getUsername();
+        this.password = userDTO.getPassword();
+        this.role = ABAUserRole.USER;
+        this.firstName = userDTO.getFirstname();
+        this.lastName = userDTO.getLastname();
+        this.active = true;
+    }
+    
+    
+    //TODO: remove password from tostring
 }

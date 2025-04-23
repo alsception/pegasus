@@ -2,6 +2,9 @@ package org.alsception.pegasus.features.users;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import org.alsception.pegasus.security2.SecurityConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -13,13 +16,17 @@ public class UserService {
     
     @Autowired
     private PasswordEncoder passwordEncoder;    
+    
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
+
 
     @Autowired
     public UserService(UserRepository repository) {
         this.repository = repository;
     }
 
-    public UserDTO createUser(UserDTO userDTO) {
+    public UserDTO createUser(UserDTO userDTO) 
+    {
         // Convert DTO to Entity
         ABAUser user = new ABAUser();
         user.setUsername(userDTO.getUsername());
@@ -30,6 +37,18 @@ public class UserService {
         // Save the user and convert it back to DTO
         ABAUser savedUser = repository.save(user);
         return new UserDTO(savedUser);  // Convert the saved entity to DTO
+    }
+    
+    public ABAUser saveUser(ABAUser user) 
+    {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRole(ABAUserRole.USER);//TODO: take from frontend as param
+        user.setActive(Boolean.TRUE);
+        
+        ABAUser savedUser = repository.save(user);
+        
+        logger.info("User created: "+user.getUsername());
+        return savedUser; 
     }
 
     public List<UserDTO> getAllUsers() {

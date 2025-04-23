@@ -11,6 +11,8 @@ public class UserDTO
 {
     private Long id;
     private String username;
+    private String firstname;
+    private String lastname;
     private String role;    
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
@@ -24,6 +26,8 @@ public class UserDTO
     public UserDTO(ABAUser user) {
         this.id = user.getId();
         this.username = user.getUsername();
+        this.firstname = user.getFirstName();
+        this.lastname = user.getLastName();
         this.password = user.getPassword();
         this.role = user.getRole().toString();
     }

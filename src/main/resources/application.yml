@@ -15,37 +15,31 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
-    show-sql: true
+    show-sql: false
 
-  h2:
-    console:
-      enabled: true
+  devtools:
+    add-properties: true
+    # Remove spring logging info
+
+  output:
+    ansi:
+      enabled: ALWAYS
 
 server:
   port: 8080
   servlet:
-    context-path: /pegasus-backend
+    context-path: /
+    #context-path: /pegasus-backend
 
 jwt:
   secret: ${JWT_SECRET}
   expirationMs: 86400000
 
-debug: false
-
-spring.output.ansi.enabled: ALWAYS
-
 logging:
   level:
-    org.springframework.web: INFO
-    org.springframework: INFO
-    root: INFO
-    org.alsception: INFO
+    root: WARN
+    org.springframework: WARN
+    org.alsception.pegasus.*: DEBUG
 
 api:
-  env-url-1: https://api.hnb.h
-
-# cors:
-#   allowed-origins:
-#     - http://localhost:5173
-#     - https://your-frontend.com
-
+  env-url-1: https://api.hnb.hr

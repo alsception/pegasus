@@ -8,6 +8,8 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component
 public class JwtUtils {
@@ -17,13 +19,16 @@ public class JwtUtils {
 
     @Value("${jwt.expirationMs}")
     private int jwtExpirationMs;
+    
+    private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     // Use the configured jwtSecret to derive the signing key
     private SecretKey getSigningKey() {
         return Keys.hmacShaKeyFor(jwtSecret.getBytes());
     }
 
-    public String generateJwtToken(UserDetails userDetails) {
+    public String generateJwtToken(UserDetails userDetails) 
+    {
         // Use the expiration time from the config
         Date expirationDate = new Date(System.currentTimeMillis() + jwtExpirationMs);
 
@@ -34,7 +39,7 @@ public class JwtUtils {
             .signWith(getSigningKey(), SignatureAlgorithm.HS512)
             .compact();
         
-        System.out.println("created token: "+token);
+        logger.debug("created token: "+token);
         
         return token;
     }
@@ -47,7 +52,7 @@ public class JwtUtils {
                 .parseClaimsJws(token);  // This will throw an exception if the token is invalid
             return true;
         } catch (JwtException | IllegalArgumentException e) {
-            System.out.println("Invalid JWT: " + e.getMessage());
+            logger.error("Invalid JWT: " + e.getMessage());
         }
         return false;
     }
