@@ -1,4 +1,4 @@
-package org.alsception.pegasus.dto;
+package org.alsception.pegasus.features.products;
 
 // Wrapper class for the list of products
 

@@ -1,7 +1,7 @@
-package org.alsception.pegasus.repositories;
+package org.alsception.pegasus.features.products;
 
 import java.util.List;
-import org.alsception.pegasus.entities.PGSProduct;
+import org.alsception.pegasus.features.products.PGSProduct;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

@@ -1,8 +1,8 @@
-package org.alsception.pegasus.utils;
+package org.alsception.pegasus.features.products;
 
 import java.util.List;
-import org.alsception.pegasus.entities.PGSProduct;
-import org.alsception.pegasus.entities.PGSReview;
+import org.alsception.pegasus.features.products.PGSProduct;
+import org.alsception.pegasus.features.products.PGSReview;
 import org.alsception.pegasus.exception.ProductValidationException;
 
 public class ProductValidator {

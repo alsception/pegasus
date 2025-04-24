@@ -1,8 +1,9 @@
-package org.alsception.pegasus.security;
+package org.alsception.pegasus.features.security;
 
 import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -60,9 +61,10 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                // Allow unauthenticated access to index.html
+                // Allow unauthenticated access to index.html, for now :)
                 .requestMatchers("/", "/index.html", "/static/**", "/assets/**", "/favicon.ico").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
+                .requestMatchers("/api/test/test-write-error", "/api/test/test-circular", "/api/test/**").permitAll() //Allow tests
                 .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
@@ -85,29 +87,25 @@ public class SecurityConfig {
             configuration.setAllowedOrigins(Collections.singletonList("https://your-frontend.com"));
         } 
         else 
-        {
-            logger.info("Whitelisting dev server: http://localhost:5173");
-            
-            configuration.setAllowedOrigins(
-                    Arrays.asList(
-                            "http://localhost:5173",    //Local dev
-                            "http://192.168.1.70:8080"  //Local dev network
-                    )
+        {   
+            List allowedServers = Arrays.asList(
+                    "http://localhost:5173",    //Local dev
+                    "http://192.168.1.70:8080"  //Local dev network
             );
+            
+            configuration.setAllowedOrigins(allowedServers);
+            
+            logger.info("Whitelisted dev servers: " + allowedServers.toString());
         }
-        logger.trace("Setting up CORS details:");
-        
+                
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        logger.trace("Allowed methods set: GET, POST, PUT, DELETE, OPTIONS");
-        
         configuration.setAllowedHeaders(Arrays.asList("Authorization", "Cache-Control", "Content-Type"));
-        logger.trace("Allowed headers set: " + "Authorization " + "Cache-Control " + "Content-Type ");
-        
         configuration.setAllowCredentials(true);
-        logger.trace("Allowed credentials set");
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
+        
+        logger.trace("CORS details set: headers, methods, and credentials");
         
         return source;
     }

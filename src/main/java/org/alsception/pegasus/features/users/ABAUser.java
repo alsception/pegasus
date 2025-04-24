@@ -59,7 +59,7 @@ public class ABAUser
         this.created = LocalDateTime.now();
     }
 
-    public ABAUser(org.alsception.pegasus.security.UserDTO userDTO) 
+    public ABAUser(org.alsception.pegasus.features.security.UserDTO userDTO) 
     {
         this.username = userDTO.getUsername();
         this.password = userDTO.getPassword();

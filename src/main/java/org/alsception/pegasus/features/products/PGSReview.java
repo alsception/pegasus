@@ -1,4 +1,4 @@
-package org.alsception.pegasus.entities;
+package org.alsception.pegasus.features.products;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Column;

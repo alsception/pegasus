@@ -1,8 +1,7 @@
-package org.alsception.pegasus.controllers;
+package org.alsception.pegasus.features.products;
 
 import java.util.List;
-import org.alsception.pegasus.entities.PGSReview;
-import org.alsception.pegasus.services.ReviewService;
+import org.alsception.pegasus.features.products.PGSReview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

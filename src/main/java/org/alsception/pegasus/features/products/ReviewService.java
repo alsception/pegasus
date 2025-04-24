@@ -1,8 +1,8 @@
-package org.alsception.pegasus.services;
+package org.alsception.pegasus.features.products;
 
 import java.util.List;
-import org.alsception.pegasus.entities.PGSReview;
-import org.alsception.pegasus.repositories.ReviewRepository;
+import org.alsception.pegasus.features.products.PGSReview;
+import org.alsception.pegasus.features.products.ReviewRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

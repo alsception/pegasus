@@ -1,4 +1,4 @@
-package org.alsception.pegasus.security;
+package org.alsception.pegasus.features.security;
 
 public class LoginResponse {
     private String accessToken;

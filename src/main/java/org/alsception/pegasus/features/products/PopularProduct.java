@@ -1,4 +1,4 @@
-package org.alsception.pegasus.dto;
+package org.alsception.pegasus.features.products;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

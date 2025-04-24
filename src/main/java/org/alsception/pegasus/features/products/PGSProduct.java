@@ -1,4 +1,4 @@
-package org.alsception.pegasus.entities;
+package org.alsception.pegasus.features.products;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.CascadeType;
@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.alsception.pegasus.entities.PGSReview;
+import org.alsception.pegasus.features.products.PGSReview;
 
 @Data //Lombook for getters and setters
 @NoArgsConstructor

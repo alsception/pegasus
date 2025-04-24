@@ -1,4 +1,4 @@
-package org.alsception.pegasus.services;
+package org.alsception.pegasus.features.products;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
@@ -9,13 +9,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 import java.util.stream.Collectors;
-import org.alsception.pegasus.dto.PopularProduct;
-import org.alsception.pegasus.dto.PopularProductsWrapper;
-import org.alsception.pegasus.entities.PGSProduct;
-import org.alsception.pegasus.entities.PGSReview;
-import org.alsception.pegasus.repositories.ProductRepository;
-import org.alsception.pegasus.repositories.ReviewRepository;
-import org.alsception.pegasus.utils.ProductValidator;
+import org.alsception.pegasus.features.products.PopularProduct;
+import org.alsception.pegasus.features.products.PopularProductsWrapper;
+import org.alsception.pegasus.features.products.PGSProduct;
+import org.alsception.pegasus.features.products.PGSReview;
+import org.alsception.pegasus.features.products.ProductRepository;
+import org.alsception.pegasus.features.products.ReviewRepository;
+import org.alsception.pegasus.services.HnbApiService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,6 +29,8 @@ public class ProductService
     private final ReviewRepository reviewRepository;
     private final HnbApiService hnbApiService;
     private final Random random = new Random();
+    
+    private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
     public ProductService(ProductRepository productRepository, ReviewRepository reviewRepository, HnbApiService hnbApiService) {
         this.productRepository = productRepository;
@@ -38,23 +42,47 @@ public class ProductService
         return productRepository.findAll();
     }
     
-    public Optional<PGSProduct> getProductById(Long id) {
-        return productRepository.findById(id);
+    public Optional<PGSProductDTO> getProductById(Long id) 
+    {
+        return productRepository.findById(id)
+            .map(PGSProductDTO::new); // converts entity to DTO if found
     }
     
-    public List<PGSProduct> findProducts(String search, String code, String name) 
+    public List<PGSProductDTO> findProducts(String search, String code, String name) 
     {
+        logger.debug("findProducts: search=["+search+"] code=["+code+"], name=["+name+"]");
         if(search != null)
         { 
-            return productRepository.findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(search, search);
-        }else{
+            try
+            {
+                List<PGSProduct> result = productRepository.findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(search, search);
+                
+                logger.debug("Found products: "+result.size());
+                logger.debug("Converting to dto");
+            
+                return  result.stream()
+                            .map(PGSProductDTO::new)
+                            .toList();
+            }
+            catch(Exception e)
+            {
+                logger.error("Error searching products: "+e.getMessage());
+                return null;
+            }
+        }
+        else
+        {
             if(code==null && name == null)
             { 
-                return productRepository.findAll();
+                return productRepository.findAll().stream()
+                            .map(PGSProductDTO::new)
+                            .toList();
             }
             else
             {
-                return productRepository.findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(code, name);
+                return productRepository.findByCodeContainingIgnoreCaseOrNameContainingIgnoreCase(code, name).stream()
+                            .map(PGSProductDTO::new)
+                            .toList();
             }
         }
     }

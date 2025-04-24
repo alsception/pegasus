@@ -2,7 +2,7 @@ package org.alsception.pegasus.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import org.alsception.pegasus.services.ProductService;
+import org.alsception.pegasus.features.products.ProductService;
 
 @Component
 public class DataInitializer implements CommandLineRunner 

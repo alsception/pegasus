@@ -1,10 +1,12 @@
-package org.alsception.pegasus.controllers;
+package org.alsception.pegasus.features.products;
 
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
-import org.alsception.pegasus.dto.PopularProductsWrapper;
-import org.alsception.pegasus.entities.PGSProduct;
-import org.alsception.pegasus.services.ProductService;
+import org.alsception.pegasus.features.products.PopularProductsWrapper;
+import org.alsception.pegasus.features.products.PGSProduct;
+import org.alsception.pegasus.features.security.AuthController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,14 +26,21 @@ public class ProductController
     @Autowired
     private ProductService productService;
     
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+    
     @GetMapping
-    public List<PGSProduct> getProducts(@RequestParam(required = false) String search, @RequestParam(required = false) String code, @RequestParam(required = false) String name)
+    public List<PGSProductDTO> getProducts(
+            @RequestParam(required = false) String search, 
+            @RequestParam(required = false) String code, 
+            @RequestParam(required = false) String name)
     {        
-        return productService.findProducts(search, code, name);
+        logger.debug("getProducts: search=["+search+"] code=["+code+"], name=["+name+"]");
+        List<PGSProductDTO> products = productService.findProducts(search, code, name);
+        return products;
     }    
 
     @GetMapping("/{id}")
-    public ResponseEntity<PGSProduct> getProductById(@PathVariable Long id) 
+    public ResponseEntity<PGSProductDTO> getProductById(@PathVariable Long id) 
     {
         return productService.getProductById(id)
             .map(ResponseEntity::ok)
