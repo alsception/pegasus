@@ -3,7 +3,7 @@ package org.alsception.pegasus.features.products;
 import java.util.List;
 import org.alsception.pegasus.features.products.PGSProduct;
 import org.alsception.pegasus.features.products.PGSReview;
-import org.alsception.pegasus.exception.ProductValidationException;
+import org.alsception.pegasus.core.exception.ProductValidationException;
 
 public class ProductValidator {
 

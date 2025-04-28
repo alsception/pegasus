@@ -5,7 +5,7 @@ import java.util.Map;
 import org.alsception.pegasus.features.users.ABAUser;
 import org.alsception.pegasus.features.users.ABAUserRole;
 import org.alsception.pegasus.features.users.UserService;
-import org.alsception.pegasus.features.security.JwtUtils;
+import org.alsception.pegasus.core.config.security.JwtUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,7 +81,7 @@ public class AuthController
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody UserDTO userDTO) 
     {
-        logger.debug("AuthRESTController: authenticating user: " + userDTO.getUsername() + " pass: " + userDTO.getPassword());
+        logger.debug("Authenticating user: " + userDTO.getUsername());
 
         try {
             authenticationManager.authenticate(

@@ -1,4 +1,4 @@
-package org.alsception.pegasus.exception;  // Change to your actual package
+package org.alsception.pegasus.core.exception;  // Change to your actual package
 
 import java.time.Instant;
 import org.springframework.http.HttpStatus;

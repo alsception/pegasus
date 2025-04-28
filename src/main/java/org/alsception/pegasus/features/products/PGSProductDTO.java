@@ -20,6 +20,9 @@ public class PGSProductDTO
     private BigDecimal priceEur;    
     private BigDecimal priceUsd;        
     private String description;    
+    private String taxGroup;    
+    private String tax;    
+    private String category;    
     private List<PGSReview> reviews;   
     
      public PGSProductDTO(PGSProduct product) {

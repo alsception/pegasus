@@ -1,4 +1,4 @@
-package org.alsception.pegasus.features.security;
+package org.alsception.pegasus.core.config.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -11,7 +11,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
-import org.alsception.pegasus.features.security.JwtUtils;
+import org.alsception.pegasus.features.security.CustomUserDetailsService;
+import org.alsception.pegasus.core.config.security.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 

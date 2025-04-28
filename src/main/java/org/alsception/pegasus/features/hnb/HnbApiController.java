@@ -1,7 +1,6 @@
-package org.alsception.pegasus.controllers;
+package org.alsception.pegasus.features.hnb;
 
-import org.alsception.pegasus.features.products.HnbApiExchangeRateResponse;
-import org.alsception.pegasus.services.HnbApiService;
+import org.alsception.pegasus.features.hnb.HnbApiService;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 

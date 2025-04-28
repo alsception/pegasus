@@ -15,7 +15,7 @@ import org.alsception.pegasus.features.products.PGSProduct;
 import org.alsception.pegasus.features.products.PGSReview;
 import org.alsception.pegasus.features.products.ProductRepository;
 import org.alsception.pegasus.features.products.ReviewRepository;
-import org.alsception.pegasus.services.HnbApiService;
+import org.alsception.pegasus.features.hnb.HnbApiService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

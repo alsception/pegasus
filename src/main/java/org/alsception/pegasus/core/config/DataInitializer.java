@@ -1,4 +1,4 @@
-package org.alsception.pegasus.config;
+package org.alsception.pegasus.core.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

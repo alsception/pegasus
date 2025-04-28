@@ -35,6 +35,7 @@ server:
 jwt:
   secret: ${JWT_SECRET}
   expirationMs: 86400000
+  # Cookie session duration in millis (1 day default now 86400000)
 
 logging:
   level:

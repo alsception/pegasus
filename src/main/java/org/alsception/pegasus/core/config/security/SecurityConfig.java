@@ -1,9 +1,10 @@
-package org.alsception.pegasus.features.security;
+package org.alsception.pegasus.core.config.security;
 
 import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import org.alsception.pegasus.features.security.CustomUserDetailsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,7 +50,7 @@ public class SecurityConfig {
         if (activeProfile == null || activeProfile.isEmpty()) {
             logger.warn("⚠️ No active profile set. Running with default settings.");
         } else {
-            logger.info("✅ Active Spring profile: {}", activeProfile);
+            logger.info("Active Spring profile: {}", activeProfile);
         }
     }
 

@@ -1,7 +1,6 @@
-package org.alsception.pegasus.services;
+package org.alsception.pegasus.features.hnb;
 
 import java.math.BigDecimal;
-import org.alsception.pegasus.features.products.HnbApiExchangeRateResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

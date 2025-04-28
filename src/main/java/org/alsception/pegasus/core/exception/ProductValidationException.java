@@ -1,4 +1,4 @@
-package org.alsception.pegasus.exception;
+package org.alsception.pegasus.core.exception;
 
 
 public class ProductValidationException extends RuntimeException {

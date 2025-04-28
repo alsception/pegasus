@@ -1,4 +1,4 @@
-package org.alsception.pegasus.features.products;
+package org.alsception.pegasus.features.hnb;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
